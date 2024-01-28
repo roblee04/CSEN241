@@ -5,11 +5,12 @@ sysbench cpu --cpu-max-prime=20000 run
 --memory-block-size
 
 sysbench memory --memory-block-size=1K --memory-total-size=10G run
+sysbench memory --memory-block-size=1K run
 
 -file-test-mode 
 
 sysbench fileio --file-total-size=10G --file-test-mode=rndrw prepare
 sysbench fileio --file-total-size=10G --file-test-mode=rndrw run
 sysbench fileio --file-total-size=10G --file-test-mode=rndrw cleanup
+echo > sudo /proc/sys/vm/drop_caches
 
-echo3 > /proc/sys/vm/dropcaches 
