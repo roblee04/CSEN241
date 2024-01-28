@@ -12,5 +12,5 @@ sysbench memory --memory-block-size=1K run
 sysbench fileio --file-total-size=10G --file-test-mode=rndrw prepare
 sysbench fileio --file-total-size=10G --file-test-mode=rndrw run
 sysbench fileio --file-total-size=10G --file-test-mode=rndrw cleanup
-echo > sudo /proc/sys/vm/drop_caches
+sudo sh -c "/usr/bin/echo 3 > /proc/sys/vm/drop_caches"
 
