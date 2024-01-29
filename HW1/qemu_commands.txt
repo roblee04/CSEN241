@@ -1,0 +1,214 @@
+
+CREATING DISK IMAGES
+
+raw
+
+sudo qemu-img create ubuntu.raw 10G -f raw
+
+qcow2
+
+sudo qemu-img create ubuntu.img 10G -f qcow2
+
+______________________________________
+
+QEMU CPU and RAM SELECTION
+
+sudo qemu-system-x86_64 -drive file=ubuntu.img -m 2048 -smp 1
+sudo qemu-system-x86_64 -drive file=ubuntu.img -m 2048 -smp 2
+
+I chose to give 1 and 2 cpus because it seemed to have the greatest performance breakpoints.
+
+1:
+General statistics:
+    total time:                          10.0095s
+    total number of events:              457
+
+Latency (ms):
+         min:                                   17.09
+         avg:                                   21.87
+         max:                                   31.18
+         95th percentile:                       23.95
+         sum:                                 9994.05
+
+Threads fairness:
+    events (avg/stddev):           457.0000/0.00
+    execution time (avg/stddev):   9.9941/0.00
+
+2:
+General statistics:
+    total time:                          10.0022s
+    total number of events:              580
+
+Latency (ms):
+         min:                                   16.37
+         avg:                                   17.23
+         max:                                   23.61
+         95th percentile:                       18.28
+         sum:                                 9990.94
+
+Threads fairness:
+    events (avg/stddev):           580.0000/0.00
+    execution time (avg/stddev):   9.9909/0.00
+
+3:
+General statistics:
+    total time:                          10.0012s
+    total number of events:              405
+
+Latency (ms):
+         min:                                   20.90
+         avg:                                   24.65
+         max:                                   38.75
+         95th percentile:                       26.68
+         sum:                                 9983.18
+
+Threads fairness:
+    events (avg/stddev):           405.0000/0.00
+    execution time (avg/stddev):   9.9832/0.00
+
+4:
+CPU speed:
+    events per second:    40.95
+
+General statistics:
+    total time:                          10.0061s
+    total number of events:              410
+
+Latency (ms):
+         min:                                   17.29
+         avg:                                   24.37
+         max:                                   46.65
+         95th percentile:                       28.16
+         sum:                                 9990.14
+
+Threads fairness:
+    events (avg/stddev):           410.0000/0.00
+    execution time (avg/stddev):   9.9901/0.00
+
+
+
+sudo qemu-system-x86_64 -drive file=ubuntu.img -m 512
+sudo qemu-system-x86_64 -drive file=ubuntu.img -m 2048
+
+I chose to give 512 Mb RAM because and 2G of RAM because they were relatively small sizes,
+were easy to differentiate results, and seemed to have the largest discrepency.
+
+Total operations: 11605 ( 1159.73 per second)
+
+23210.00 MiB transferred (2319.46 MiB/sec)
+
+512:
+Running memory speed test with the following options:
+  block size: 1KiB
+  total size: 102400MiB
+  operation: write
+  scope: global
+
+Initializing worker threads...
+
+Threads started!
+
+Total operations: 6349515 (634579.79 per second)
+
+6200.70 MiB transferred (619.71 MiB/sec)
+
+
+General statistics:
+    total time:                          10.0009s
+    total number of events:              6349515
+
+Latency (ms):
+         min:                                    0.00
+         avg:                                    0.00
+         max:                                    1.15
+         95th percentile:                        0.00
+         sum:                                 3365.62
+
+Threads fairness:
+    events (avg/stddev):           6349515.0000/0.00
+    execution time (avg/stddev):   3.3656/0.00
+
+
+
+
+2048:
+General statistics:
+    total time:                          10.0003s
+    total number of events:              8729684
+
+Latency (ms):
+         min:                                    0.00
+         avg:                                    0.00
+         max:                                    0.61
+         95th percentile:                        0.00
+         sum:                                 3270.32
+
+Threads fairness:
+    events (avg/stddev):           8729684.0000/0.00
+    execution time (avg/stddev):   3.2703/0.00
+
+
+4096:
+Total operations: 5524314 (551580.90 per second)
+
+5394.84 MiB transferred (538.65 MiB/sec)
+
+
+General statistics:
+    total time:                          10.0017s
+    total number of events:              5524314
+
+Latency (ms):
+         min:                                    0.00
+         avg:                                    0.00
+         max:                                    6.87
+         95th percentile:                        0.00
+         sum:                                 3385.73
+
+Threads fairness:
+    events (avg/stddev):           5524314.0000/0.00
+    execution time (avg/stddev):   3.3857/0.00
+
+8G:
+Total operations: 3826554 (382095.05 per second)
+
+3736.87 MiB transferred (373.14 MiB/sec)
+
+
+General statistics:
+    total time:                          10.0051s
+    total number of events:              3826554
+
+Latency (ms):
+         min:                                    0.00
+         avg:                                    0.00
+         max:                                   12.64
+         95th percentile:                        0.00
+         sum:                                 3314.24
+
+Threads fairness:
+    events (avg/stddev):           3826554.0000/0.00
+    execution time (avg/stddev):   3.3142/0.00
+
+____________________
+
+QEMU RAW 
+
+sudo qemu-system-x86_64 -drive file=ubuntu.raw,format=raw -m 512 -smp 1 -net user,hostfwd=tcp::10022-:22 -net nic
+
+sudo qemu-system-x86_64 -drive file=ubuntu.raw,format=raw -m 512 -smp 2 -net user,hostfwd=tcp::10022-:22 -net nic
+
+sudo qemu-system-x86_64 -drive file=ubuntu.raw,format=raw -m 2048 -smp 1 -net user,hostfwd=tcp::10022-:22 -net nic
+
+sudo qemu-system-x86_64 -drive file=ubuntu.raw,format=raw -m 2048 -smp 2 -net user,hostfwd=tcp::10022-:22 -net nic
+
+QEMU qcow2
+
+sudo qemu-system-x86_64 -drive file=ubuntu.img,format=qcow2 -m 512 -smp 1 -net user,hostfwd=tcp::8888-:22 -net nic
+
+sudo qemu-system-x86_64 -drive file=ubuntu.img,format=qcow2 -m 512 -smp 2 -net user,hostfwd=tcp::8888-:22 -net nic
+
+sudo qemu-system-x86_64 -drive file=ubuntu.img,format=qcow2 -m 2048 -smp 1 -net user,hostfwd=tcp::8888-:22 -net nic
+
+sudo qemu-system-x86_64 -drive file=ubuntu.img,format=qcow2 -m 2048 -smp 2 -net user,hostfwd=tcp::8888-:22 -net nic
+

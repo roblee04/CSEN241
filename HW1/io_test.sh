@@ -6,19 +6,21 @@ CSV=sysbench_io.csv
 
 sysbench fileio  --file-test-mode=$MODE prepare
 sysbench fileio  --file-test-mode=$MODE run > $FILENAME
-sudo sh -c "/usr/bin/echo 3 > /proc/sys/vm/drop_caches"
-# drop cache after each run
-sysbench fileio  --file-test-mode=$MODE run >> $FILENAME
-sudo sh -c "/usr/bin/echo 3 > /proc/sys/vm/drop_caches"
+
+echo "1 done"
+sleep 3
 
 sysbench fileio  --file-test-mode=$MODE run >> $FILENAME
-sudo sh -c "/usr/bin/echo 3 > /proc/sys/vm/drop_caches"
-
+echo "2 done"
+sleep 3
 sysbench fileio  --file-test-mode=$MODE run >> $FILENAME
-sudo sh -c "/usr/bin/echo 3 > /proc/sys/vm/drop_caches"
-
+echo "3 done"
+sleep 3
 sysbench fileio  --file-test-mode=$MODE run >> $FILENAME
-sudo sh -c "/usr/bin/echo 3 > /proc/sys/vm/drop_caches"
+echo "4 done"
+sleep 3
+sysbench fileio  --file-test-mode=$MODE run >> $FILENAME
+echo "5 done"
 # clean up files
 sysbench fileio  --file-test-mode=$MODE cleanup
 
