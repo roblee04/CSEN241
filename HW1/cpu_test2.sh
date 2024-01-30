@@ -1,15 +1,16 @@
 # run sysbench 5 times
 
-MEM=1K
-FILENAME=mem_tests.txt
-CSV=sysbench_mem.csv
-sysbench memory --memory-block-size=$MEM run > $FILENAME
-sysbench memory --memory-block-size=$MEM run >> $FILENAME
-sysbench memory --memory-block-size=$MEM run >> $FILENAME
-sysbench memory --memory-block-size=$MEM run >> $FILENAME
-sysbench memory --memory-block-size=$MEM run >> $FILENAME
+PRIME=100000
+FILENAME=cpu_tests.txt
+CSV=sysbench_cpu.csv
+sysbench cpu --cpu-max-prime=$PRIME run > $FILENAME
+sysbench cpu --cpu-max-prime=$PRIME run >> $FILENAME
+sysbench cpu --cpu-max-prime=$PRIME run >> $FILENAME
+sysbench cpu --cpu-max-prime=$PRIME run >> $FILENAME
+sysbench cpu --cpu-max-prime=$PRIME run >> $FILENAME
 
 # looking for avg
+# cat $FILENAME | egrep " cat|total time:|total number of events:|deadlocks|read/write|min:|avg:|max:|percentile:" | tr -d "\n" | sed 's/total time: //g' | sed 's/total number of events: /\n/g' | sed 's/\[/\n/g' | sed 's/[A-Za-z\/]\{1,\}://g'| sed 's/ \.//g' | sed -e 's/read\/write//g' -e 's/approx\.  95/\n/g' -e 's/per sec.)//g' -e 's/ms//g' -e 's/(//g' -e 's/^.*cat //g' | sed 's/ \{1,\}/\t/g' > $CSV
 cat $FILENAME | egrep " cat|threads:|total time:|total number of events:|read/write|min:|avg:|max:|percentile:" | tr -d "\n" | sed 's/Number of threads: /\n/g' | sed 's/total time: //g' | sed 's/[A-Za-z\/] //g' | sed 's/\[/\n/g' | sed 's/[A-Za-z\/]\{1,\}://g'| sed 's/ \.//g' | sed -e 's/read\/write//g' -e 's/approx\.  95//g' -e 's/per sec.)//g' -e 's/ms//g' -e 's/(//g' -e 's/^.*cat //g' | sed 's/ \{1,\}/\t/g' > $CSV
 
 # calculate averages of averages

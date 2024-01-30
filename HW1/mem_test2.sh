@@ -1,6 +1,6 @@
 # run sysbench 5 times
 
-MEM=1K
+MEM=16K
 FILENAME=mem_tests.txt
 CSV=sysbench_mem.csv
 sysbench memory --memory-block-size=$MEM run > $FILENAME

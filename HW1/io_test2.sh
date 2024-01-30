@@ -1,15 +1,30 @@
 # run sysbench 5 times
 
-MEM=1K
-FILENAME=mem_tests.txt
-CSV=sysbench_mem.csv
-sysbench memory --memory-block-size=$MEM run > $FILENAME
-sysbench memory --memory-block-size=$MEM run >> $FILENAME
-sysbench memory --memory-block-size=$MEM run >> $FILENAME
-sysbench memory --memory-block-size=$MEM run >> $FILENAME
-sysbench memory --memory-block-size=$MEM run >> $FILENAME
+MODE=seqwr
+FILENAME=io_tests.txt
+CSV=sysbench_io.csv
 
-# looking for avg
+sysbench fileio  --file-test-mode=$MODE prepare
+sysbench fileio  --file-test-mode=$MODE run > $FILENAME
+
+echo "1 done"
+sleep 3
+
+sysbench fileio  --file-test-mode=$MODE run >> $FILENAME
+echo "2 done"
+sleep 3
+sysbench fileio  --file-test-mode=$MODE run >> $FILENAME
+echo "3 done"
+sleep 3
+sysbench fileio  --file-test-mode=$MODE run >> $FILENAME
+echo "4 done"
+sleep 3
+sysbench fileio  --file-test-mode=$MODE run >> $FILENAME
+echo "5 done"
+# clean up files
+sysbench fileio  --file-test-mode=$MODE cleanup
+
+# parse into csv
 cat $FILENAME | egrep " cat|threads:|total time:|total number of events:|read/write|min:|avg:|max:|percentile:" | tr -d "\n" | sed 's/Number of threads: /\n/g' | sed 's/total time: //g' | sed 's/[A-Za-z\/] //g' | sed 's/\[/\n/g' | sed 's/[A-Za-z\/]\{1,\}://g'| sed 's/ \.//g' | sed -e 's/read\/write//g' -e 's/approx\.  95//g' -e 's/per sec.)//g' -e 's/ms//g' -e 's/(//g' -e 's/^.*cat //g' | sed 's/ \{1,\}/\t/g' > $CSV
 
 # calculate averages of averages
