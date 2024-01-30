@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "qemu_vm" do |qemu|
+    qemu.vm.hostname = "ubuntu-qcow2"
+    # vm box is locally made with qcow2 formatted image file, generic ubuntu image is here as placeholder to work
+    qemu.vm.box = "generic/ubuntu2004"
+    qemu.vm.network "forwarded_port", guest: 80, host: 8888
+    qemu.vm.provider :libvirt do |libvirt|
+      libvirt.driver = "qemu"
+      libvirt.memory = "512"
+      libvirt.cpus = 1
+    end
+  end
+
+  config.vm.define "qemu_vm" do |qemu2|
+    qemu2.vm.hostname = "ubuntu-raw"
+    # vm box is locally made with raw formateed image file, generic ubuntu image is here as placeholder to work
+    qemu2.vm.box = "generic/ubuntu2004"
+    qemu2.vm.network "forwarded_port", guest: 80, host: 10022
+    qemu2.vm.provider :libvirt do |libvirt|
+      libvirt.driver = "qemu"
+      libvirt.memory = "512"
+      libvirt.cpus = 1
+    end
+  end
+
+end

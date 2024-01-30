@@ -1,0 +1,12 @@
+# syntax=docker/dockerfile:1
+
+FROM ubuntu:22.04
+
+RUN apt-get update && apt-get install sysbench
+
+COPY . cpu_test.sh
+COPY . cpu_test2.sh
+COPY . mem_test.sh
+COPY . mem_test2.sh
+COPY . io_test.sh
+COPY . io_test2.sh
