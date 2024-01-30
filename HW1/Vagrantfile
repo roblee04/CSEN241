@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "qemu_vm" do |qemu2|
+  config.vm.define "qemu_vm2" do |qemu2|
     qemu2.vm.hostname = "ubuntu-raw"
     # vm box is locally made with raw formateed image file, generic ubuntu image is here as placeholder to work
     qemu2.vm.box = "generic/ubuntu2004"

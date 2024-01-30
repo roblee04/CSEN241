@@ -5,7 +5,7 @@ sysbench cpu --cpu-max-prime=50000 run
 --memory-block-size
 
 sysbench memory --memory-block-size=1K --memory-total-size=10G run
-sysbench memory --memory-block-size=2M run
+sysbench memory --memory-block-size=1K run
 
 -file-test-mode 
 
