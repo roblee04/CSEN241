@@ -1,0 +1,8 @@
+
+
+docker run --rm -it --cpus 1 --memory 512000000 docker_benchmark /bin/bash    
+docker run --rm -it --cpus 1 --memory 2G docker_benchmark /bin/bash    
+docker run --rm -it --cpus 2 --memory 512000000 docker_benchmark /bin/bash    
+docker run --rm -it --cpus 2 --memory 2G docker_benchmark /bin/bash    
+
+I copied the arguments from the qemu setup to do a proper comparison.
