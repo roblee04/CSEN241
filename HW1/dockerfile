@@ -2,7 +2,7 @@
 
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install sysbench
+RUN apt-get update -y && apt-get install sysbench -y
 
 COPY . cpu_test.sh
 COPY . cpu_test2.sh
